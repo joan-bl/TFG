@@ -175,7 +175,7 @@ def main():
     confidence_threshold = 0.4
 
     os.makedirs(output_dir, exist_ok=True)
-    model = YOLO("runs/detect/train13/weights/best.pt")
+    model = YOLO(r"C:\Users\joanb\OneDrive\Escritorio\TFG\workspace\osteona\best.pt")
     images = sorted(
         [f for f in os.listdir(images_dir) if f.endswith('.png')],
         key=lambda x: int(x.split('_')[-1].split('.')[0])
