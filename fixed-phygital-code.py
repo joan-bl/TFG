@@ -242,13 +242,15 @@ def display_results(root, excel_path, plot_buf, heatmap_buf, avg_area, count_hav
 
     # Pestaña de gráfico - Modificamos para evitar el error de pyimage
     try:
+        # Reiniciar el puntero del búfer
+        plot_buf.seek(0)
         plot_image = Image.open(plot_buf)
         plot_photo = ImageTk.PhotoImage(plot_image)
         
-        # Guardamos una referencia global para evitar que sea recogida por el recolector de basura
-        root.plot_photo = plot_photo
-        
-        plot_label = Label(frame2, image=root.plot_photo, bg='#001f3f')
+        # Usar un Label con la imagen
+        plot_label = Label(frame2, image=plot_photo, bg='#001f3f')
+        # Mantener una referencia de la imagen
+        plot_label.image = plot_photo
         plot_label.pack(expand=True, fill='both')
         
         # Botón para guardar el gráfico
@@ -276,13 +278,15 @@ def display_results(root, excel_path, plot_buf, heatmap_buf, avg_area, count_hav
 
     # Pestaña de mapa de calor - Modificamos para evitar el error de pyimage
     try:
+        # Reiniciar el puntero del búfer
+        heatmap_buf.seek(0)
         heatmap_image = Image.open(heatmap_buf)
         heatmap_photo = ImageTk.PhotoImage(heatmap_image)
         
-        # Guardamos una referencia global para evitar que sea recogida por el recolector de basura
-        root.heatmap_photo = heatmap_photo
-        
-        heatmap_label = Label(frame4, image=root.heatmap_photo, bg='#001f3f')
+        # Usar un Label con la imagen
+        heatmap_label = Label(frame4, image=heatmap_photo, bg='#001f3f')
+        # Mantener una referencia de la imagen
+        heatmap_label.image = heatmap_photo
         heatmap_label.pack(expand=True, fill='both')
         
         # Botón para guardar el mapa de calor
