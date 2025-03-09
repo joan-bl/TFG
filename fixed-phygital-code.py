@@ -321,6 +321,46 @@ def main():
         root.destroy()
         return
     
+        # AQUÍ ES DONDE PEGARÍAS EL CÓDIGO DE REDIMENSIONAMIENTO
+    def resize_image_if_too_large(image_path, max_pixels=178956970):
+        """
+        Redimensiona una imagen si es demasiado grande.
+        """
+        print(f"Verificando tamaño de imagen: {image_path}")
+        img = cv2.imread(image_path)
+        if img is None:
+            return False
+        
+        height, width = img.shape[:2]
+        pixels = height * width
+        print(f"Tamaño original: {width}x{height} = {pixels} píxeles")
+        
+        if pixels > max_pixels:
+            # Calcular factor de escala para reducir
+            scale = (max_pixels / pixels) ** 0.5
+            new_width = int(width * scale)
+            new_height = int(height * scale)
+            print(f"Redimensionando a: {new_width}x{new_height}")
+            
+            # Redimensionar
+            resized = cv2.resize(img, (new_width, new_height))
+            
+            # Guardar versión redimensionada (con un nombre diferente)
+            resized_path = image_path.rsplit('.', 1)[0] + '_resized.' + image_path.rsplit('.', 1)[1]
+            cv2.imwrite(resized_path, resized)
+            print(f"Imagen redimensionada guardada en: {resized_path}")
+            
+            return resized_path
+        
+        return image_path
+
+    # Antes de dividir la imagen, verifica su tamaño
+    image_path = resize_image_if_too_large(image_path)
+    if not image_path:
+        print("Error al procesar la imagen.")
+        root.destroy()
+        return
+    
     # Actualizar la ventana para mostrar el progreso
     root = Tk()  # Crear una nueva ventana ya que la anterior se cerró
     configure_window(root, "Processing")
@@ -347,7 +387,7 @@ def main():
         
         # Cargar modelo YOLO
         print("Cargando modelo YOLO...")
-        model_path = r"C:\Users\joanb\OneDrive\Escritorio\TFG\workspace\osteona\best.pt"
+        model_path = r"C:\Users\joanb\OneDrive\Escritorio\TFG\workspace\runs\detect\train\weights\best.pt"
         print(f"Ruta del modelo: {model_path}")
         
         if not os.path.exists(model_path):
