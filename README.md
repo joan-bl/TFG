@@ -1,4 +1,4 @@
-README - Proyecto Phygital Human Bone
+Proyecto Phygital Human Bone
 Descripción General
 Este proyecto se centra en el análisis automatizado de imágenes de microtomografía CT para la detección y análisis de canales de Havers en tejido óseo cortical. Utilizando técnicas de visión por computadora y aprendizaje automático, el software permite identificar estructuras microanatómicas del hueso y analizar su distribución espacial.
 Componentes Principales
